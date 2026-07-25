@@ -1,160 +1,539 @@
-# MSCS 634 – Data Mining Project
+# MSCS 634 – Final Data Mining Project
 
-## Student
+## Online Retail Data Mining Analysis
 
-Srujana Nevoji
+**Student:** Srujana Nevoji  
+**Course:** MSCS 634 – Data Mining  
+**University:** University of the Cumberlands
 
-## Project Title
-
-Online Retail Data Cleaning, Exploratory Analysis, Feature Engineering, and Regression Modeling
+---
 
 ## Project Overview
 
-This project analyzes the Online Retail dataset through two connected project deliverables.
+This project applies data mining and machine learning techniques to a real-world
+Online Retail dataset. The project was completed in multiple phases covering data
+collection and cleaning, exploratory data analysis, feature engineering, regression,
+classification, clustering, hyperparameter tuning, and association rule mining.
 
-Project Deliverable 1 focuses on data collection, data cleaning, and exploratory data analysis. Project Deliverable 2 extends the same cleaned dataset through feature engineering, regression modeling, model evaluation, and cross-validation.
+The overall goal of the project was to transform raw retail transaction data into
+meaningful insights that could support business decisions such as sales prediction,
+identification of high-value transactions, transaction segmentation, product
+recommendations, cross-selling, and inventory planning.
 
-The overall purpose of the project is to demonstrate a complete data mining workflow, beginning with raw transactional data and progressing toward predictive modeling and model evaluation.
+---
 
 ## Dataset
 
-The Online Retail dataset contains transactional data from an online retail business.
+The Online Retail dataset from the UCI Machine Learning Repository was used for
+this project. It contains transactional data from a UK-based online retailer and
+includes purchases from customers in multiple countries.
+
+Dataset source:
+
+https://archive.ics.uci.edu/dataset/352/online-retail
 
 Important attributes include:
 
-* Invoice number
-* Product description
-* Quantity
-* Invoice date
-* Unit price
-* Customer identifier
-* Country
+- InvoiceNo – Unique invoice/transaction identifier
+- StockCode – Product identifier
+- Description – Product description
+- Quantity – Number of units purchased
+- InvoiceDate – Date and time of transaction
+- UnitPrice – Price per unit
+- CustomerID – Customer identifier
+- Country – Country associated with the transaction
 
-The dataset was selected because it contains a large number of real-world transactional records and supports data cleaning, visualization, exploratory analysis, feature engineering, and predictive modeling.
+The dataset was selected because it provides real-world transactional information
+that can be used for several different data mining tasks.
 
-# Project Deliverable 1
+---
 
-## Data Cleaning
+## Project Workflow
 
-Several data-cleaning steps were performed before analysis.
+The project consisted of four major phases:
 
-These included:
+1. Data Collection, Cleaning, and Exploration
+2. Feature Engineering and Regression
+3. Classification, Clustering, and Pattern Mining
+4. Final Analysis, Recommendations, and Ethical Considerations
 
-* Examining missing values
-* Removing records missing essential product information
-* Removing duplicate records
-* Removing cancelled transactions
-* Removing transactions with nonpositive quantities
-* Removing transactions with invalid unit prices
-* Standardising product descriptions
-* Converting invoice dates to datetime format
+---
 
-A new variable called `TotalSales` was created by multiplying Quantity by UnitPrice.
+## 1. Data Preparation and Cleaning
 
-Additional time-related features were also extracted from InvoiceDate.
+The original dataset required preprocessing before machine learning and statistical
+analysis could be performed.
 
-## Exploratory Data Analysis
+The main preprocessing steps included:
 
-Several analyses and visualizations were performed, including:
+- Examining missing values
+- Removing records with missing information when required
+- Removing duplicate records
+- Removing cancelled transactions
+- Removing records with invalid quantities
+- Removing records with invalid unit prices
+- Converting InvoiceDate to datetime format
+- Standardizing product descriptions
+- Creating a TotalSales variable
 
-* Top products by quantity sold
-* Sales by country
-* Monthly sales trends
-* Quantity distribution
-* Box plots for potential outliers
-* Correlation analysis
+TotalSales was calculated as:
 
-## Deliverable 1 Key Insights
+TotalSales = Quantity × UnitPrice
 
-The exploratory analysis showed that some products are purchased substantially more frequently than others.
+After cleaning, the resulting dataset contained valid completed transactions that
+could be used for further analysis.
 
-Sales were also unevenly distributed across geographic markets, with certain countries generating considerably more revenue.
+---
 
-The monthly sales trend revealed changes in transaction activity over time that may reflect seasonal purchasing behaviour.
+## 2. Exploratory Data Analysis
 
-The quantity distribution was strongly skewed and contained potential outliers. These observations required careful interpretation because some unusually large transactions could represent valid bulk purchases rather than errors.
+Exploratory Data Analysis (EDA) was performed to understand the characteristics
+and patterns of the retail dataset.
 
-These findings helped guide the feature engineering and modeling decisions used in the second project deliverable.
+The analysis included:
 
-# Project Deliverable 2
+- Sales distribution
+- Product purchase frequency
+- Sales and transaction activity by country
+- Monthly sales patterns
+- Quantity and price distributions
+- Detection of extreme values and outliers
 
-## Feature Engineering
+The EDA showed that the sales distribution was right-skewed, with most transactions
+having relatively smaller values and a smaller number of transactions having very
+large values.
 
-The same cleaned Online Retail dataset from Deliverable 1 was used for predictive modeling.
+The geographic analysis also showed that sales were strongly concentrated in the
+United Kingdom. Product analysis revealed that several relatively small household
+and decorative products were purchased in high quantities.
 
-Individual product records were aggregated into invoice-level observations.
+Monthly analysis indicated changes in purchasing activity over time, including
+increased sales activity toward the later months of the year.
 
-The engineered predictors included:
+These findings helped guide the feature engineering and modeling stages.
 
-* Total quantity purchased
-* Number of unique products
-* Average unit price
-* Transaction month
-* Day of the week
-* Transaction hour
-* Weekend indicator
+---
 
-The target variable was `TotalSales`, representing the total monetary value of each invoice.
+## 3. Feature Engineering
 
-Transactions above the 99th percentile of invoice sales were excluded from the modeling dataset to reduce the influence of extremely large transactions.
+The original dataset contains individual product-level records. For predictive
+modeling, the data was aggregated to the invoice level.
 
-## Regression Models
+The following features were created:
 
-Three regression approaches were developed:
+- TotalQuantity
+- UniqueProducts
+- AvgUnitPrice
+- TotalSales
+- Month
+- DayOfWeek
+- Hour
+- Weekend
 
-1. Multiple Linear Regression
-2. Ridge Regression
-3. Lasso Regression
+These engineered features provide information about transaction size, product
+diversity, product prices, transaction timing, and overall transaction value.
 
-The dataset was divided into 80% training data and 20% testing data.
+Feature engineering allowed the raw transactional data to be transformed into a
+format suitable for regression, classification, and clustering.
 
-Features were standardised before regression model training.
+---
 
-## Model Evaluation
+## 4. Regression Analysis
+
+Regression models were developed to predict invoice-level TotalSales.
+
+The following models were evaluated:
+
+- Multiple Linear Regression
+- Ridge Regression
+- Lasso Regression
 
 The models were evaluated using:
 
-* Mean Absolute Error (MAE)
-* Mean Squared Error (MSE)
-* Root Mean Squared Error (RMSE)
-* R-squared (R²)
+- Mean Absolute Error (MAE)
+- Mean Squared Error (MSE)
+- Root Mean Squared Error (RMSE)
+- R-squared (R²)
+- 5-fold cross-validation
 
-The model with the lowest prediction error and highest R² was considered the stronger model based on test-set results.
+### Regression Results
 
-## Cross-Validation
+| Model | MAE | MSE | RMSE | R² |
+|------|------:|------:|------:|------:|
+| Multiple Linear Regression | 141.167949 | 58677.91371| 242.235245 | 0.634831 |
+| Ridge Regression | 141.168060 | 58677.9208030 | 242.235252 | 0.634831 |
+| Lasso Regression | 141.508559 | 58678.4692029 | 242.292268 | 0.634659 |
 
-Five-fold cross-validation was performed to assess the ability of each model to generalize to unseen data.
+The three models produced very similar results. Multiple Linear Regression achieved
+The lowest prediction error by a very small margin and was selected as the strongest
+Overall regression model.
 
-Cross-validation provided a more reliable assessment of model performance than relying only on one train-test split.
+The mean cross-validation R² was approximately **0.614323** for all three models,
+indicating reasonably consistent performance across different subsets of the data.
 
-## Key Modeling Insights
+---
 
-Feature engineering transformed the original item-level retail records into meaningful invoice-level observations suitable for regression analysis.
+## 5. Classification Analysis
 
-Transaction quantity, product diversity, average product price, and transaction timing provided useful predictors for invoice-level sales.
+Classification models were developed to identify high-value and lower-value
+transactions.
 
-Regularisation methods such as Ridge and Lasso allowed the project to compare ordinary regression with models that control coefficient magnitude.
+Because the original dataset did not contain a predefined classification target,
+a new binary variable called `HighValue` was created.
 
-Using multiple evaluation measures provided a more complete understanding of predictive performance.
+- 1 = High-value transaction
+- 0 = Lower-value transaction
 
-## Challenges
+The median TotalSales value was used as the threshold.
 
-One challenge involved handling missing values, duplicate records, cancellations, and invalid transaction values while preserving useful information.
+Two classification models were evaluated:
 
-Another challenge involved identifying potential outliers. Some extremely large transactions may be valid purchases rather than errors.
+- Decision Tree
+- k-Nearest Neighbors (k-NN)
 
-During the modeling stage, extreme invoice sales could strongly influence regression coefficients. Transactions above the 99th percentile were therefore excluded from the modeling dataset.
+### Classification Results
 
-Another important consideration was target leakage. Item-level TotalSales is calculated directly from Quantity and UnitPrice. To create a more meaningful prediction problem, transactions were aggregated to the invoice level and additional features were engineered.
+| Model | Accuracy | F1 Score | ROC-AUC |
+|------|------:|------:|------:|
+| Decision Tree | 0.845697 | 0.844396 | 0.845695 |
+| k-NN | 0.755867 | 0.748121 | 0.807626 |
 
-Cross-validation pipelines were used so that feature scaling occurred independently within each validation fold, reducing the risk of data leakage.
+The Decision Tree performed better than k-NN across Accuracy, F1 Score, and ROC-AUC.
+
+Confusion matrices and ROC curves were also used to evaluate classification
+performance.
+
+---
+
+## 6. Hyperparameter Tuning
+
+GridSearchCV was used to optimize the Decision Tree classifier.
+
+The parameters evaluated included:
+
+- max_depth
+- min_samples_split
+- min_samples_leaf
+- criterion
+
+The best parameters were:
+
+- max_depth = 7
+- min_samples_split = 2
+- min_samples_leaf = 2
+- criterion = entropy
+
+The best cross-validation F1 score was approximately:
+
+**0.884965**
+
+### Original vs. Tuned Decision Tree
+
+| Model | Accuracy | F1 Score | ROC-AUC |
+|------|------:|------:|------:|
+| Original Decision Tree | 0.845697 | 0.844396 | 0.845695 |
+| Tuned Decision Tree | 0.877529 | 0.880147 | 0.953112 |
+
+Hyperparameter tuning improved the Decision Tree's performance. The tuned model
+produced higher Accuracy, F1 Score, and ROC-AUC than the original model.
+
+The improvement in ROC-AUC was particularly noticeable, indicating better
+separation between high-value and lower-value transactions.
+
+---
+
+## 7. K-Means Clustering
+
+K-Means clustering was used to identify naturally occurring transaction groups.
+
+The clustering model used:
+
+- TotalQuantity
+- UniqueProducts
+- AvgUnitPrice
+- TotalSales
+
+The variables were standardized before applying K-Means because the algorithm is
+based on distance calculations.
+
+The Elbow Method and Silhouette Score were used to determine an appropriate number
+of clusters.
+
+The highest silhouette score was obtained with:
+
+**k = 2**
+
+Silhouette Score:
+
+**0.42603372**
+
+The final model therefore used two clusters.
+
+### Cluster Interpretation
+
+**Cluster 0 – Smaller / Lower-Value Transactions**
+
+This cluster contained transactions with approximately:
+
+- Average TotalQuantity: 133 units
+- Average UniqueProducts: 14
+- Average UnitPrice: 3.39
+- Average TotalSales: 245.82
+
+**Cluster 1 – Larger / Higher-Value Transactions**
+
+This cluster contained transactions with approximately:
+
+- Average TotalQuantity: 501 units
+- Average UniqueProducts: 39
+- Average UnitPrice: 2.64
+- Average TotalSales: 774.73
+
+The results suggest that the larger transaction group generated higher sales mainly
+through greater product quantities and greater product diversity rather than through
+higher individual product prices.
+
+---
+
+## 8. Association Rule Mining
+
+Association rule mining was performed using the Apriori algorithm to identify
+products that were frequently purchased together.
+
+A subset of transactions from France was used to make market-basket analysis more
+computationally manageable.
+
+The analysis used:
+
+- Minimum support: 0.05
+- Minimum confidence: 0.50
+
+The Apriori algorithm identified approximately **194 frequent itemsets** that met
+the selected support threshold.
+
+Several ALARM CLOCK BAKELIKE products appeared among the most frequent items,
+including pink, green, and red variations.
+
+Strong association rules were also found between related products, including
+SKULL-themed paper napkins and matching paper plates.
+
+Several of these rules produced very high confidence and lift values, indicating
+that the products occurred together substantially more frequently than would be
+expected if their purchases were independent.
+
+These relationships could support product recommendations, cross-selling,
+promotional bundles, and inventory planning.
+
+---
+
+## 9. Key Findings
+
+The major findings from the project include:
+
+- Data cleaning was necessary because the original dataset contained missing values,
+  duplicate records, cancelled invoices, and invalid transaction values.
+
+- Retail sales were highly right-skewed, with most transactions having relatively
+  small values and a smaller number of transactions having much larger values.
+
+- Multiple Linear Regression provided the strongest regression results, although
+  Ridge and Lasso produced nearly identical performance.
+
+- The Decision Tree performed better than k-NN for identifying high-value
+  transactions.
+
+- Hyperparameter tuning improved the Decision Tree, producing an accuracy of
+  approximately 87.75%, an F1 score of approximately 0.880, and ROC-AUC of
+  approximately 0.953.
+
+- K-Means identified two major transaction groups representing smaller/lower-value
+  and larger/higher-value purchasing patterns.
+
+- Association rule mining identified meaningful relationships among products that
+  were frequently purchased together.
+
+Overall, the project demonstrated that different data mining methods provide
+different but complementary insights into retail transaction data.
+
+---
+
+## 10. Practical Business Applications
+
+The results of this project could support several practical retail applications.
+
+### Product Recommendations
+
+Association rules can be used to recommend related products when customers add
+certain products to their shopping carts.
+
+### Cross-Selling and Bundling
+
+Products with strong confidence and lift values can potentially be bundled or
+promoted together.
+
+### Transaction Segmentation
+
+K-Means clusters can help distinguish different transaction patterns and support
+more targeted marketing strategies.
+
+### High-Value Transaction Identification
+
+Classification models can help identify transaction characteristics associated
+with higher-value purchases.
+
+### Inventory Management
+
+Frequently purchased products and strongly associated product combinations can
+help retailers make more informed inventory decisions.
+
+### Sales Analysis
+
+Regression models can help businesses understand relationships between transaction
+characteristics and overall transaction value.
+
+---
+
+## 11. Ethical Considerations
+
+Several ethical considerations should be addressed when applying machine learning
+to retail transaction data.
+
+### Data Privacy
+
+Retail transaction data may contain customer identifiers and purchasing histories.
+Organizations should protect customer information through appropriate access
+controls, anonymization, and responsible data management.
+
+CustomerID was not used as a direct predictive feature in the final models.
+
+### Fairness
+
+Machine learning predictions should not be used to unfairly exclude customers from
+offers, services, or opportunities.
+
+### Bias
+
+The dataset represents transactions from a specific retailer and historical period.
+The purchasing patterns may therefore not represent every customer population,
+geographic region, or retail organization.
+
+### Responsible Model Use
+
+Classification and clustering results should support business decision-making
+rather than automatically replace human judgment.
+
+Association rules represent statistical relationships and should not be interpreted
+as proof that purchasing one product causes the purchase of another.
+
+---
+
+## 12. Challenges
+
+Several challenges were encountered during the project:
+
+- Handling missing values
+- Removing cancelled and invalid transactions
+- Managing duplicate records
+- Handling extreme transaction values
+- Aggregating product-level records into invoice-level data
+- Creating meaningful predictive features
+- Creating a classification target
+- Selecting the appropriate number of clusters
+- Choosing appropriate Apriori support and confidence thresholds
+- Managing the computational requirements of association rule mining
+- Installing and configuring Python packages in Jupyter Notebook
+
+These challenges were addressed through data preprocessing, feature engineering,
+model evaluation, parameter experimentation, and incremental testing of the code.
+
+---
+
+## 13. Future Improvements
+
+Future work could extend this project by:
+
+- Testing Random Forest and Gradient Boosting models
+- Evaluating Support Vector Machines
+- Performing more extensive hyperparameter tuning
+- Comparing K-Means with DBSCAN and Hierarchical Clustering
+- Performing customer-level RFM analysis
+- Developing a product recommendation system
+- Applying FP-Growth to larger transaction datasets
+- Examining seasonal purchasing patterns in greater detail
+- Validating models using newer transaction data
+
+These improvements could provide additional insights and improve model
+generalization.
+
+---
+
+## 14. Technologies and Libraries
+
+The project was completed using Python in Jupyter Notebook.
+
+Major libraries included:
+
+- Pandas
+- NumPy
+- Matplotlib
+- Seaborn
+- Scikit-learn
+- mlxtend
+
+Machine learning and data mining techniques included:
+
+- Multiple Linear Regression
+- Ridge Regression
+- Lasso Regression
+- Decision Tree
+- k-Nearest Neighbors
+- GridSearchCV
+- K-Means Clustering
+- PCA
+- Apriori
+- Association Rules
+
+---
+
+## Repository Contents
+
+This repository contains:
+
+- `MSCS_634_Final_Project.ipynb` – Complete Jupyter Notebook containing the analysis
+- `README.md` – Summary of the project, methodology, and findings
+- Final project report – Detailed written analysis of the project
+- Presentation – Slides summarizing the project and key findings
+- Dataset or dataset information, where applicable
+
+---
 
 ## Conclusion
 
-This project demonstrated a complete data mining workflow using the Online Retail dataset.
+This project provided practical experience with the complete data mining workflow,
+beginning with raw transactional data and progressing through cleaning, exploratory
+analysis, feature engineering, predictive modeling, clustering, and pattern mining.
 
-The first phase transformed raw transactional records into a clean and reliable dataset and used exploratory analysis to identify important patterns, trends, and potential data-quality issues.
+Regression, classification, clustering, and association rule mining each provided
+different perspectives on the Online Retail dataset. Multiple Linear Regression
+provided useful sales predictions, the tuned Decision Tree successfully classified
+high-value transactions, K-Means identified distinct transaction groups, and Apriori
+identified meaningful relationships between products.
 
-The second phase extended the same dataset through feature engineering and predictive modeling. Multiple Linear Regression, Ridge Regression, and Lasso Regression were compared using MAE, MSE, RMSE, R², and five-fold cross-validation.
+The project demonstrates how data mining can transform raw retail transactions into
+actionable information that can potentially support marketing, recommendations,
+cross-selling, customer segmentation, and inventory management.
 
-Overall, the project demonstrated the importance of data preparation, exploratory analysis, appropriate feature engineering, model comparison, and validation when building predictive solutions using real-world data.
+---
+
+## References
+
+Chen, D. (2015). Online retail [Data set]. UCI Machine Learning Repository.
+https://doi.org/10.24432/C5BW33
+
+Chen, D., Sain, S. L., & Guo, K. (2012). Data mining for the online retail
+industry: A case study of RFM model-based customer segmentation using data mining.
+Journal of Database Marketing & Customer Strategy Management, 19, 197–208.
+
+Han, J., Pei, J., & Tong, H. (2022). Data mining: Concepts and techniques
+(4th ed.). Morgan Kaufmann.
+
