@@ -3,7 +3,7 @@
 ## Online Retail Data Mining Analysis
 
 **Student:** Srujana Nevoji  
-**Course:** MSCS 634 – Data Mining  
+**Course:** MSCS 634 – Advanced Big Data and Data Mining  
 **University:** University of the Cumberlands
 
 ---
